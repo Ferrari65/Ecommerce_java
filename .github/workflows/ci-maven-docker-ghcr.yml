@@ -2,7 +2,7 @@ name: CI - Maven + Docker (GHCR)
 
 on:
   push:
-    branches: [ "master" ]      # ou "master", se seu branch principal for master
+    branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
 
