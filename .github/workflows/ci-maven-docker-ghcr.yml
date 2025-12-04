@@ -2,7 +2,7 @@ name: CI - Maven + Docker (GHCR)
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master" ]      # ou "master", se seu branch principal for master
   pull_request:
     branches: [ "master" ]
 
@@ -26,12 +26,14 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        working-directory: checkout
+        run: mvn -B package
 
       - name: Log in to GitHub Container Registry
         run: echo "${{ github.token }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build Docker image
+        working-directory: checkout
         env:
           IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/ecommerce-java
         run: |
